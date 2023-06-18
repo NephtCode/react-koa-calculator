@@ -1,74 +1,73 @@
-Tarea 3. Tecnologias y Aplicaciones Web. Nicolas Olmos.
+# Web-Based Calculator API Project
 
-Explicacion general:
+This README provides an in-depth description of a Web-Based Calculator API, which was developed as the third assignment for the Web Technologies and Applications course. The project is designed with a clear separation of concerns between the frontend and backend components. It uses React for the frontend to deliver an interactive UI and Koa for the backend. The communication between the two is achieved through API calls using Fetch. Code consistency and cleanliness are maintained with the help of ESLint and Prettier.
 
-Hay dos carpetas, una es la del backend, la cual dentro tiene la carpeta src, tiene los siguientes archivos:
+## Table of Contents
 
-index.js:
+1. [Project Structure](#project-structure)
+2. [Execution Instructions](#execution-instructions)
+3. [Assumptions and Observations](#assumptions-and-observations)
 
-En este archivo se crea un servidor con Koa con soporte para CORS, se hace el registro de solicitudes y respuestas, análisis de datos en las solicitudes y manejo de rutas utilizando el router de routes.js. Luego, inicia el servidor y lo hace escuchar en el puerto 3000 (En una issue se especifico que no importaba el puerto)
+## Project Structure
 
-routes.js:
+This project is organized into two primary directories: `backend` and `frontend`. Each directory contains specific components related to their respective functions.
 
-En este archivo se definen las rutas para realizar las operaciones basicas de la calculadora usando koa-router, de aqui se usan los metodos get o post dependiendo de la operacion para que funcione la API.
+### Backend
 
-operations.js:
+The backend directory includes a `src` folder with the following files:
 
-Se definen las operaciones matematicas basicas.
+- `index.js`: Establishes a Koa server with CORS support, registers request and response, parses request data, and manages route using a router from `routes.js`. The server listens on port 3000, as detailed in the `.env` file.
 
-Ademas, en el archivo .env se guarda el puerto 3000, el cual se extrae en index.js a traves de dotenv.config(). Finalmente esta el archivo package.json que tiene todas las dependencias usadas, como aparecio en el taller del semestre pasado, se uso un script para que nodemon funcionara al escribir yarn dev.
+- `routes.js`: Defines the routes for basic calculator operations using koa-router. It uses HTTP GET and POST methods to make the API operational.
 
-Por otro lado, tenemos la carpeta frontend, la cual tiene los siguientes archivos dentro de la carpeta src:
+- `operations.js`: Contains the definitions of basic mathematical operations.
 
-App.jsx, donde se exporta la calculadora.
+Other important files in the backend directory include:
 
-main.jsx, donde se muestra la App.
+- `.env`: Stores the port (3000) which is used in `index.js` via `dotenv.config()`.
 
-Calculator.jsx, aqui esta todo lo principal, en primer lugar se importa React y el archivo de estilos de la calculadora, despues se define el componente de la calculadora como una función llamada Calculator, continua utilizando hooks de React (useState y useEffect) para manejar el estado de la expresión y si se muestra o no resultado en la pantalla de la calculadora. En el efecto de useEffect, se agrega un event listener para capturar la tecla Enter y llamar a la función handleEqualClick cuando se presiona, tal cual como lo pedia en el enunciado Tambien se define la función countOperators que cuenta la cantidad de operadores en la expresion, de aqui hay muchas funciones, pero en resumen, estas manejan los clicks de los botones de los dígitos, operadores y botones de borrar un digito y borrar todo. La función handleEqualClick es la mas importante, esta maneja cuando se apreta el boton = o se presiona la tecla Enter, al ocurrir cualquier opcion, se analiza la expresión para extraer los numeros y el operador, luego realiza una solicitud GET o POST a una API, enviando los numeros. Si la respuesta es exitosa, actualiza la expresión con el resultado y se muestra el resultado en la calculadora, si ocurre un error, avisa en la consola (con F12 se puede ver bien).
+- `package.json`: Lists all dependencies and includes a script for nodemon which runs upon executing `yarn dev`.
 
-Ademas, dentro de la carpeta src hay otra carpeta de assets, dentro hay una carpeta de styles con el archivo calculator.css para que se vea bien la calculadora.
+### Frontend
 
-Adicionalmente, tengo la extension de ESLint en VSC (fue recomendada por el profesor en una issue), debido a esto es que se creo un archivo llamado .eslintrc.jsc , no se si afectara en algo a la correccion.
+The frontend directory contains a `src` folder with the following key components:
 
-Finalmente esta el archivo package.json con las dependencias (cuidado aqui que al verla me di cuenta que en el script toma en cuenta el linter, ¿si el ayudante no lo tiene instalada la extension quizas no funcione?)
+- `App.jsx`: Exports the calculator component.
 
-Ejecucion:
+- `main.jsx`: Renders the App component.
 
-Antes de todo, borre la carpeta node_modules, por lo que el ayudante debe hacer el yarn install (si no me equivoco).
+- `Calculator.jsx`: Serves as the main logic of the application. This component is responsible for handling button clicks, evaluating expressions, and making API calls. It uses React hooks (`useState` and `useEffect`) to manage calculator's state and screen display.
 
-Se deben abrir dos terminales, en cada una hay que ingresar a la carpeta principal y hacer cd backend y cd frontend. Ya con una terminal en el backend y otra en el frontend, en ambas terminales se debe correr yarn dev
+The `src` folder also includes an `assets` directory containing `calculator.css` which styles the calculator's interface.
 
-Al menos en mi caso (Ubuntu) era hacer esto:
+Additionally, there is an `.eslintrc.jsc` file for integrating ESLint into the project. Note: The presence of this file might impact the project if the ESLint extension is not installed.
 
-nicolas_olmos@NotebookNico:~/20625960_Olmos_Nicolas/backend$ yarn dev
+The `package.json` file specifies all dependencies, including the linter in the script. Note: If the ESLint extension isn't installed, this might affect the project's functionality.
 
-nicolas_olmos@NotebookNico:~/20625960_Olmos_Nicolas/frontend$ yarn dev
+## Execution Instructions
 
-Y al abrir (en mi caso) http://localhost:5173/ se puede ver todo lo relacionado con la calculadora y se puede empezar a calcular lo que se quiera.
+To run the application, follow these steps:
 
-Suposiciones y Observaciones
+1. Remove the `node_modules` folder if it exists.
 
-1. La calculadora no permite colocar simbolos donde no se debe, por ejemplo, no se puede iniciar con una suma o division o multiplicacion, si se puede empezar con una resta ya que puede ser que el primer numero sea negativo, basicamente que se puede iniciar un "-3" pero no un "*3".
+2. Run `yarn install` to fetch all dependencies.
 
-2. Parecido a lo anterior, las operaciones toman en cuenta el primer numero (negativo o no), una operacion, y el otro numero (negativo o no),
-aqui tenemos algunos ejemplos:
+3. Open two terminals. In each terminal, navigate to the project's main folder.
 
-6+7 = 13
+4. In one terminal, navigate to the backend directory using `cd backend`. In the other terminal, navigate to the frontend directory using `cd frontend`.
 
-6*7 = 13
+5. Run `yarn dev` in both terminals.
 
--6+7 = 1
+Once both servers are running, open your web browser and navigate to `http://localhost:5173/` to access the calculator and perform calculations.
 
--6--7 = 1 (se toma en cuenta que la operacion es un menos entre -6 y -7)
+## Assumptions and Observations
 
--6+-7 = -13 (se toma en cuenta que la operacion es un mas entre -6 y -7)
+The following are some assumptions and observations made during
 
-6/-2 = -3 (se toma en cuenta que la operacion es una división entre 6 y -2)
+ the development of this project:
 
--7*4 = -28
+1. The calculator prevents the placement of operators in incorrect locations, e.g., starting an expression with addition, division, or multiplication. However, an expression can start with a subtraction sign to denote a negative number.
 
--7*-4 = 28 (se toma en cuenta que la operacion es una multiplicacion entre -7 y -4)
+2. The calculator evaluates expressions in the format of: a number (positive or negative), an operator, and another number (positive or negative). Examples: `-6+7=1`, `-6--7=1`, `-6+-7=-13`, `6/-2=-3`, `-7*4=-28`, `-7*-4=28`. The application does not support multiple-operation expressions or invalid inputs, such as `3*/2`.
 
-Y asi sucesivamente, otros inputs como conjunto de operaciones (ej: -5/3-3+1) no se pueden realizar, tampoco se pueden hacer cosas sin sentido, como 3*/2.
-
-Un detalle es que si se intenta dividir por 0, entonces el error se maneja en el backend, pero coloque que en la pantalla de la calculadora apareciera un mensaje diciendo "ERROR", igual que otro resultado, este desaparece al presionar cualquier boton.
+3. Attempts to divide by zero are handled by the backend, but the frontend will display an "ERROR" message. This error message is cleared when any button is pressed.
