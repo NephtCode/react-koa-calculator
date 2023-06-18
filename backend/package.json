@@ -1,0 +1,27 @@
+{
+  "name": "calculator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@koa/cors": "^4.0.0",
+    "dotenv": "^16.0.3",
+    "koa": "^2.14.2",
+    "koa-body": "^6.0.1",
+    "koa-logger": "^3.2.1",
+    "koa-router": "^12.0.0",
+    "nodemon": "^2.0.22"
+  },
+  "scripts": {
+    "dev": "nodemon src/index.js",
+    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-import": "^2.25.2",
+    "prettier": "2.8.8"
+  }
+}
